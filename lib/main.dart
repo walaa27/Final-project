@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'RegisterScreen.dart';
+import 'Views/RegisterScreen.dart';
 void main() {
   runApp(const MyApp());
 }
-//walaa
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -102,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Sign up '),
             ),
+
           ],
         ),
       ),
