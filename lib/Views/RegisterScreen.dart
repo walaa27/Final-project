@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'HomePageScreen.dart';
 
 
 class Registerscreen extends StatefulWidget {
@@ -76,17 +76,17 @@ class RegisterscreenPageState extends State<Registerscreen> {
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { },
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+                );
+              },
+
               child: Text('Register'),
             ),
 
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () { },
-              child: Text(''),
-            ),
+
           ],
         ),
       ),
