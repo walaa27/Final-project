@@ -1,39 +1,18 @@
 import 'package:flutter/material.dart';
-import 'RegisterScreen.dart';
-void main() {
-  runApp(const MyApp());
-}
-//walaa
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: ''),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class Registerscreen extends StatefulWidget {
+  const Registerscreen({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Registerscreen> createState() => RegisterscreenPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -59,6 +38,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("Id :" , style: TextStyle( fontSize: 20),),
+            Container(
+              width: 500,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter Id',
+                ),
+              ),
+            ),
 
             Text("Email/phone :" , style: TextStyle( fontSize: 20),),
             Container(
@@ -70,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+
             Text("Paswoord:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
@@ -81,26 +71,21 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
+
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () { },
-              child: Text('Log in'),
-
+              child: Text('Register'),
             ),
 
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder:(context) => const Registerscreen(title: "New Acount")),
-                );
-              },
-              child: Text('Sign up '),
+              onPressed: () { },
+              child: Text(''),
             ),
           ],
         ),
