@@ -14,7 +14,11 @@ class Registerscreen extends StatefulWidget {
 
 class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
-
+  final _txtId =TextEditingController();
+  final _txtUserName =TextEditingController();
+  final _txtphone =TextEditingController();
+  final _txtEmail =TextEditingController();
+  final _txtPaswoord =TextEditingController();
   void _incrementCounter() {
     setState(() {
 
@@ -38,27 +42,18 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Id :" , style: TextStyle( fontSize: 20),),
+
+            Text("User Name :" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Id',
+                  hintText: 'Enter User Name',
                 ),
               ),
             ),
 
-            Text("Email/phone :" , style: TextStyle( fontSize: 20),),
-            Container(
-              width: 500,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter Email or Phone',
-                ),
-              ),
-            ),
 
             Text("Paswoord:" , style: TextStyle( fontSize: 20),),
             Container(
