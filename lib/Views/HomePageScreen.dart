@@ -28,7 +28,7 @@ class _Homepagescreen extends State<Homepagescreen> {
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        title: Text(widget.title),
+        title: Text("Home"),
       ),
       body: Center(
 
@@ -36,6 +36,14 @@ class _Homepagescreen extends State<Homepagescreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+
+              },  child: Icon(Icons.account_circle ),
+            ),
 
             Text("test"),
 

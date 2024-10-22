@@ -1,3 +1,4 @@
+import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'Views/RegisterScreen.dart';
 void main() {
@@ -51,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        title: Text(widget.title),
+        title: Text("Contact Doctors"),
       ),
       body: Center(
 
@@ -60,23 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("Email/phone :" , style: TextStyle( fontSize: 20),),
+            Text("Id :" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Email or Phone',
+                  hintText: 'Enter Id',
                 ),
               ),
             ),
-            Text("Paswoord:" , style: TextStyle( fontSize: 20),),
+            Text("Phone Or Email:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Paswoord',
+                  hintText: 'Enter Phone Or Email',
                 ),
               ),
             ),
@@ -85,7 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { },
+              onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder:(context) => const Homepagescreen(title: "HOMEPAGESCREEN")),
+                );
+
+              },
               child: Text('Log in'),
 
             ),
