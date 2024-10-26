@@ -42,10 +42,11 @@ class _Homepagescreen extends State<Homepagescreen> {
               ),
               onPressed: () {
 
+
               },  child: Icon(Icons.account_circle ),
             ),
 
-            Text("Profile"),
+
 
 
           ],
