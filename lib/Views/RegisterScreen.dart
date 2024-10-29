@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 
 
@@ -80,6 +81,21 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
               child: Text('Register'),
             ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                var uti = new Utils();
+                uti.showMyDialog(context, _txtEmail.text,_txtId.text );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder:(context) => const Homepagescreen(title: 'HOMEPAGESCREEN',)),
+                  );
+              },
+              child: Text('utils'),
+            ),
+
 
 
           ],
