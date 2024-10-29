@@ -86,12 +86,11 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
+
                 var uti = new Utils();
                 uti.showMyDialog(context, _txtEmail.text,_txtId.text );
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder:(context) => const Homepagescreen(title: 'HOMEPAGESCREEN',)),
-                  );
+
+
               },
               child: Text('utils'),
             ),
