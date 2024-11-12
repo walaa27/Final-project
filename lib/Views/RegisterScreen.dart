@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Utils/DB.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 
@@ -86,6 +87,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
+                insertUser("wbg","hh",'aa');
 
                 var uti = new Utils();
                 uti.showMyDialog(context, _txtEmail.text,_txtId.text );
