@@ -1,12 +1,12 @@
 import 'package:mysql1/mysql1.dart';
 
 var _conn;
-void main(){
+/*void main(){
   showUsers();
   insertUser("wbg","hh",'aa');
 }
 
-
+*/
 // for(int i=0; i<100; 1++)
 
 Future<void> showUsers() async {
