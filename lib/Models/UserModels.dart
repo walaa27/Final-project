@@ -11,6 +11,7 @@ class User{
   String phone;
   String note;
   String adress;
+
   factory User.fromJson(Map<String, dynamic>json)=> User(
     id: json["id"],
     name: json["name"],
