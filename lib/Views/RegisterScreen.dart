@@ -22,11 +22,40 @@ class RegisterscreenPageState extends State<Registerscreen> {
   final _txtLastName =TextEditingController();
   // final _txtEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
+
+
   void _incrementCounter() {
     setState(() {
-
       _counter++;
     });
+  }
+
+
+  void insertUserFunc()
+  {
+    if(_txtUserName.text != "" && _txtPaswoord.text != "")
+      {
+        User us = new User();
+        us.FirstName = _txtUserName.text;
+        us.LastName = _txtLastName.text;
+        us.Password = _txtPaswoord.text;
+        insertUser(us);
+        var uti = new Utils();
+        uti.showMyDialog(context, "success", "you registed successfully");
+        // _txtPaswoord.text = "";
+        // _txtUserName.text = "";
+        // _txtLastName.text = "";
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+        // );
+
+      }
+    else
+      {
+        var uti = new Utils();
+        uti.showMyDialog(context, "Required", "please insert username and password");
+      }
   }
 
   @override
@@ -44,27 +73,28 @@ class RegisterscreenPageState extends State<Registerscreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("User Name :" , style: TextStyle( fontSize: 20),),
+            Text("User Name*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 controller: _txtUserName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter User Name',
+                  hintText: 'Enter User Name - required',
                 ),
               ),
             ),
 
 
-            Text("Last Name:" , style: TextStyle( fontSize: 20),),
+            Text("Last Name*:" , style: TextStyle( fontSize: 20),),
+
             Container(
               width: 500,
               child: TextField(
                 controller: _txtLastName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter last name',
+                  hintText: 'Enter last name - required',
                 ),
               ),
             ),
@@ -73,14 +103,14 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
 
 
-            Text("Paswoord:" , style: TextStyle( fontSize: 20),),
+            Text("Password*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 controller: _txtPaswoord,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Paswoord',
+                  hintText: 'Enter Password-required',
                 ),
               ),
             ),
@@ -104,24 +134,22 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                User us =new User();
-                us.FirstName = _txtUserName.text;
-                us.LastName = _txtLastName.text;
-                us.Password = _txtPaswoord.text;
-                insertUser(us);
 
+                insertUserFunc();
+
+                /*
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
                 );
-
+*/
                 // var uti = new Utils();
                 // uti.showMyDialog(context, _txtEmail.text,_txtId.text );
               },
               child: Text('Register'),
             ),
 
-
+//
 
           ],
         ),
