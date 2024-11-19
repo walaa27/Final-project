@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Models/User.dart';
 import '../Utils/DB.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
@@ -16,10 +17,10 @@ class Registerscreen extends StatefulWidget {
 
 class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
-  final _txtId =TextEditingController();
+  // final _txtId =TextEditingController();
   final _txtUserName =TextEditingController();
-  final _txtphone =TextEditingController();
-  final _txtEmail =TextEditingController();
+  final _txtLastName =TextEditingController();
+  // final _txtEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
   void _incrementCounter() {
     setState(() {
@@ -33,9 +34,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
         title: Text(widget.title),
       ),
       body: Center(
@@ -49,6 +48,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
             Container(
               width: 500,
               child: TextField(
+                controller: _txtUserName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter User Name',
@@ -57,10 +57,27 @@ class RegisterscreenPageState extends State<Registerscreen> {
             ),
 
 
+            Text("Last Name:" , style: TextStyle( fontSize: 20),),
+            Container(
+              width: 500,
+              child: TextField(
+                controller: _txtLastName,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter last name',
+                ),
+              ),
+            ),
+
+
+
+
+
             Text("Paswoord:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
+                controller: _txtPaswoord,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter Paswoord',
@@ -68,7 +85,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
               ),
             ),
 
-
+/*
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -79,22 +96,29 @@ class RegisterscreenPageState extends State<Registerscreen> {
                   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
                 );
               },
-
               child: Text('Register'),
             ),
+            */
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                insertUser("wbg","hh",'aa');
+                User us =new User();
+                us.FirstName = _txtUserName.text;
+                us.LastName = _txtLastName.text;
+                us.Password = _txtPaswoord.text;
+                insertUser(us);
 
-                var uti = new Utils();
-                uti.showMyDialog(context, _txtEmail.text,_txtId.text );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+                );
 
-
+                // var uti = new Utils();
+                // uti.showMyDialog(context, _txtEmail.text,_txtId.text );
               },
-              child: Text('utils'),
+              child: Text('Register'),
             ),
 
 
