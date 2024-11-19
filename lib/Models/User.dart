@@ -3,7 +3,7 @@ class User {
     this.UserID = "",
     this.FirstName = "",
     this.LastName = "",
-    this.Password = 0 ,
+    this.Password = "" ,
 
 
   });
@@ -11,7 +11,7 @@ class User {
   String UserID;
   String FirstName;
   String LastName;
-  int Password;
+  String Password;
 
 
   factory User.fromJson(Map<String, dynamic> json)=>
@@ -20,7 +20,6 @@ class User {
         FirstName: json["FirstName"],
         LastName: json["LastName"],
         Password: json["Password"],
-
 
       );
 
