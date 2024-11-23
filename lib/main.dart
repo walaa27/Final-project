@@ -63,23 +63,23 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("Id :" , style: TextStyle( fontSize: 20),),
+            Text("Id* :" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Id',
+                  hintText: 'Enter Id - required',
                 ),
               ),
             ),
-            Text("Phone Or Email:" , style: TextStyle( fontSize: 20),),
+            Text("Phone Or Email*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Phone Or Email',
+                  hintText: 'Enter Phone Or Email - required',
                 ),
               ),
             ),

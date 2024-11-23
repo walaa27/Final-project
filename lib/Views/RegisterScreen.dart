@@ -18,7 +18,7 @@ class Registerscreen extends StatefulWidget {
 class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
   // final _txtId =TextEditingController();
-  final _txtUserName =TextEditingController();
+  final _txtFirstName =TextEditingController();
   final _txtLastName =TextEditingController();
   // final _txtEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
@@ -33,22 +33,42 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
   void insertUserFunc()
   {
-    if(_txtUserName.text != "" && _txtPaswoord.text != "")
+    if(_txtFirstName.text != "" && _txtPaswoord.text != "")
+
       {
         User us = new User();
-        us.FirstName = _txtUserName.text;
+        us.FirstName = _txtFirstName.text;
         us.LastName = _txtLastName.text;
         us.Password = _txtPaswoord.text;
-        insertUser(us);
-        var uti = new Utils();
-        uti.showMyDialog(context, "success", "you registed successfully");
-        // _txtPaswoord.text = "";
-        // _txtUserName.text = "";
-        // _txtLastName.text = "";
+        var resp = insertUser(us);
+
+        Future.delayed(
+          Duration(seconds: 2),
+              () =>    Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+              ),
+        );
+
+        /*
+        print("resp: " + resp.toString());
+        if(resp == "1")
+          {
+            Navigator.push(
+               context,
+              MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+             );
+          }
+         */
+        // var uti = new Utils();
+        // uti.showMyDialog(context, "success", "you registed successfully");
+         // _txtPaswoord.text = "";
+         // _txtUserName.text = "";
+         // _txtLastName.text = "";
         // Navigator.push(
-        //   context,
+        //    context,
         //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-        // );
+        //  );
 
       }
     else
@@ -73,21 +93,18 @@ class RegisterscreenPageState extends State<Registerscreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("User Name*:" , style: TextStyle( fontSize: 20),),
+            Text("First Name*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
-                controller: _txtUserName,
+                controller: _txtFirstName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter User Name - required',
+                  hintText: 'Enter First Name - required',
                 ),
               ),
             ),
-
-
             Text("Last Name*:" , style: TextStyle( fontSize: 20),),
-
             Container(
               width: 500,
               child: TextField(

@@ -31,7 +31,7 @@ Future<void> showUsers() async {
 
 
 
-Future<void> insertUser(User user) async {
+Future<String> insertUser(User user) async {
   connectToDB();
 
   var result = await _conn.query(
@@ -58,7 +58,11 @@ Future<void> insertUser(User user) async {
     print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
   }*/
 
+
   // Finally, close the connection
   await _conn.close();
+
+  return "1";
+
 
 }
