@@ -74,7 +74,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
     else
       {
         var uti = new Utils();
-        uti.showMyDialog(context, "Required", "please insert username and password");
+        uti.showMyDialog(context, "חובה", "בבקשה הזן את שם פרטי והסיסמה");
       }
   }
 
@@ -93,41 +93,39 @@ class RegisterscreenPageState extends State<Registerscreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("First Name*:" , style: TextStyle( fontSize: 20),),
+            Text("שם פרטי*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 controller: _txtFirstName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter First Name - required',
+                  hintText: 'הזן את שם הפרטי - חובה',
                 ),
               ),
             ),
-            Text("Last Name*:" , style: TextStyle( fontSize: 20),),
+            Text("שם משפחה:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 controller: _txtLastName,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter last name - required',
+                  hintText: 'הזן את שם המשפחה- חובה'
+                ),
                 ),
               ),
-            ),
 
 
 
-
-
-            Text("Password*:" , style: TextStyle( fontSize: 20),),
+            Text("סיסמה*:" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 controller: _txtPaswoord,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Password-required',
+                  hintText: 'הזן את הסיסמה - חובה',
                 ),
               ),
             ),
@@ -163,7 +161,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 // var uti = new Utils();
                 // uti.showMyDialog(context, _txtEmail.text,_txtId.text );
               },
-              child: Text('Register'),
+              child: Text('הרשמה'),
             ),
 
 //
