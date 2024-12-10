@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        title: Text("Contact Doctors"),
+        title: Text("סופר פארם"),
       ),
       body: Center(
 
@@ -63,26 +63,27 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("Id* :" , style: TextStyle( fontSize: 20),),
+            Text("תעודת זהות* :" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Id - required',
+                  hintText: 'הזן את תעודת הזהות - חובה',
                 ),
               ),
             ),
-            Text("Phone Or Email*:" , style: TextStyle( fontSize: 20),),
+            Text(" מספר טלפון או אימיל" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter Phone Or Email - required',
+                  hintText: 'הזן את מספר טלפון אימיל - חובה',
                 ),
               ),
             ),
+
 
             TextButton(
               style: ButtonStyle(
@@ -92,11 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 Navigator.push(
                 context,
-                MaterialPageRoute(builder:(context) => const Homepagescreen(title: "HOMEPAGESCREEN")),
+                MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
                 );
 
               },
-              child: Text('Log in'),
+              child: Text('כניסה'),
 
             ),
 
@@ -107,10 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder:(context) => const Registerscreen(title: "New Acount")),
+                    MaterialPageRoute(builder:(context) => const Registerscreen(title: "חשבון חדש")),
                 );
               },
-              child: Text('Sign up '),
+              child: Text('חשבון חדש'),
             ),
 
           ],
