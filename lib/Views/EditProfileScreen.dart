@@ -5,17 +5,17 @@ import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 
 
-class Registerscreen extends StatefulWidget {
-  const Registerscreen({super.key, required this.title});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<Registerscreen> createState() => RegisterscreenPageState();
+  State<EditProfileScreen> createState() => EditProfileScreenPageState();
 }
 
-class RegisterscreenPageState extends State<Registerscreen> {
+class EditProfileScreenPageState extends State<EditProfileScreen> {
   int _counter = 0;
   // final _txtId =TextEditingController();
   final _txtFirstName =TextEditingController();

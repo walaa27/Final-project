@@ -1,3 +1,4 @@
+import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 class Homepagescreen extends StatefulWidget {
@@ -96,54 +97,6 @@ class _Homepagescreen extends State<Homepagescreen> {
 
 
               },  child: Icon(Icons.account_circle ),
-              drawer: Drawer(
-                // Add a ListView to the drawer. This ensures the user can scroll
-                // through the options in the drawer if there isn't enough vertical
-                // space to fit everything.
-                child: ListView(
-                  // Important: Remove any padding from the ListView.
-                  padding: EdgeInsets.zero,
-                  children: [
-                    const DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                      ),
-                      child: Text('Drawer Header'),
-                    ),
-                    ListTile(
-                      title: const Text('Add Content'),
-                      selected: _selectedIndex == 0,
-                      onTap: () {
-                        // Update the state of the app
-                        _onItemTapped(0);
-                        // Then close the drawer
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Edit Profile'),
-                      selected: _selectedIndex == 1,
-                      onTap: () {
-                        // Update the state of the app
-                        _onItemTapped(1);
-                        // Then close the drawer
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Log Out'),
-                      selected: _selectedIndex == 2,
-                      onTap: () {
-                        // Update the state of the app
-                        _onItemTapped(2);
-                        // Then close the drawer
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-
-              ),
 
 
             ),
@@ -154,6 +107,51 @@ class _Homepagescreen extends State<Homepagescreen> {
           ],
         ),
       ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Edit Profile'),
+              selected: _selectedIndex == 1,
+              onTap: () {
+                // Update the state of the app
+                // _onItemTapped(1);
+                // Then close the drawer
+                Navigator.pop(context);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EditProfileScreen(title: 'EditProfileScreen',)),
+                );
+
+              },
+            ),
+            ListTile(
+              title: const Text('Log Out'),
+              selected: _selectedIndex == 2,
+              onTap: () {
+                // Update the state of the app
+                _onItemTapped(2);
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
