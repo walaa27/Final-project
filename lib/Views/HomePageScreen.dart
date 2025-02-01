@@ -1,6 +1,8 @@
 import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
+import 'ShoppingCart.dart';
 class Homepagescreen extends StatefulWidget {
   const Homepagescreen({super.key, required this.title});
 
@@ -45,7 +47,10 @@ class _Homepagescreen extends State<Homepagescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .inversePrimary,
         title: Text(widget.title),
       ),
       body: GridView.count(
@@ -54,77 +59,52 @@ class _Homepagescreen extends State<Homepagescreen> {
           return Center(
             child: Text(
               'Item $index',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineSmall,
             ),
           );
         }),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Add Content'),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                _onItemTapped(0);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Edit Profile'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProfileScreen(title: 'Edit Profile'),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Log Out'),
-              selected: _selectedIndex == 2,
-              onTap: () {
-                _onItemTapped(2);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ראשי',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            label: 'הסל שלי',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'חיפוש',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sticky_note_2_outlined),
-            label: 'הזמנות',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
-      ),
+
+        bottomNavigationBar: Container(
+            color: Colors.white,
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+                child: GNav(
+                    backgroundColor: Colors.white,
+                    color: Colors.pinkAccent,
+                    activeColor: Colors.pinkAccent,
+                    tabBackgroundColor: Colors.grey.shade800,
+                    padding: EdgeInsets.all(16),
+                    gap: 8,
+                    tabs: [
+                      GButton(
+                        icon: Icons.home,
+                        text: "Home",
+
+                      ),
+                      GButton(
+                          icon: Icons.shopping_basket,
+                          text: "My Basket",
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Shoppingcart(
+                                  ),
+                                )
+
+                            );
+                          }
+
+                      ),
+
+                    ]
+                )
+            )
+        )
     );
   }
 }
