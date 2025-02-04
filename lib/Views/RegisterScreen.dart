@@ -24,11 +24,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
   final _txtPaswoord =TextEditingController();
 
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
 
   void insertUserFunc()

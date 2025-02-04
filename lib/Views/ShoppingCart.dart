@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Shoppingcart extends StatefulWidget {
+import 'Homepagescreen.dart';
+
+class ShoppingCart extends StatefulWidget {
+  const ShoppingCart({super.key, required this.title});
+
+  final String title;
+
   @override
-  ShoppingcartState createState() => ShoppingcartState();
+  State<ShoppingCart> createState() => ShoppingCartPageState();
 }
 
-class ShoppingcartState {
-}
+class ShoppingCartPageState extends State<ShoppingCart> {
+  int _counter = 0;
 
-class _BasketScreenState extends State<Shoppingcart> {
-  List<Map<String, dynamic>> basketBooks = [
-  ];
-
-  double get totalPrice =>
-      basketBooks.fold(0, (sum, book) => sum + book["price"]);
-
-  void removeBook(int index) {
+  void _incrementCounter() {
     setState(() {
-      basketBooks.removeAt(index);
+      _counter++;
     });
   }
 
@@ -25,41 +24,30 @@ class _BasketScreenState extends State<Shoppingcart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Basket"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Center(
         child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: basketBooks.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(basketBooks[index]["title"]),
-                    subtitle: Text("Price: \$${basketBooks[index]["price"]}"),
-                    trailing: IconButton(
-                      icon: Icon(Icons.remove_circle, color: Colors.red),
-                      onPressed: () => removeBook(index),
-                    ),
-                  );
-                },
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-            ),
-            Divider(),
-            Text("Total: \$${totalPrice.toStringAsFixed(2)}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Proceeding to checkout...")));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=> const Homepagescreen(title :" HomePage")),
+                );
               },
-              child: Text("Checkout"),
+              child: Text(''),
             ),
+
           ],
         ),
       ),
     );
   }
-}
+  }

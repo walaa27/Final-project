@@ -1,5 +1,7 @@
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
+import 'Models/User.dart';
+import 'Utils/DB.dart';
 import 'Utils/Utils.dart';
 import 'Views/RegisterScreen.dart';
 void main() {
@@ -36,7 +38,56 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+  // final _txtId =TextEditingController();
+  final _txtUserID=TextEditingController();
+  final _txtPhoneOrEmail =TextEditingController();
 
+
+
+  void insertUserFunc()
+  {
+    if(_txtUserID.text == "" || _txtPhoneOrEmail.text == "")
+    {
+      var uti = new Utils();
+      uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
+
+
+  /*
+        print("resp: " + resp.toString());
+        if(resp == "1")
+          {
+            Navigator.push(
+               context,
+              MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+             );
+          }
+         */
+  // var uti = new Utils();
+  // uti.showMyDialog(context, "success", "you registed successfully");
+  // _txtPaswoord.text = "";
+  // _txtUserName.text = "";
+  // _txtLastName.text = "";
+  // Navigator.push(
+  //    context,
+  //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+  //  );
+
+  }
+  else
+  {
+    var us = new User();
+    us.UserID = _txtUserID.text;
+    us.PhoneOrEmail = _txtPhoneOrEmail.text;
+
+    var resp = insertUser(us);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
+    );
+
+  }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: 500,
               child: TextField(
+                controller: _txtUserID,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'הזן את תעודת הזהות - חובה',
@@ -69,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: 500,
               child: TextField(
+                controller: _txtPhoneOrEmail,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'הזן את מספר טלפון אימיל - חובה',
@@ -83,10 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
 
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
-                );
+                insertUserFunc();
+
 
               },
               child: Text('כניסה'),

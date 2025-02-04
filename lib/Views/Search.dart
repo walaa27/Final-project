@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatefulWidget {
-  @override
-  _SearchScreenState createState() => _SearchScreenState();
+class Search extends StatefulWidget {
+  const Search({super.key, required this.title});
+
+
+  final String title;
+
+  State<Search> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<Search> {
   TextEditingController _searchController = TextEditingController();
-  List<String> books = [
-
-  ];
-  List<String> filteredBooks = [];
+  List<String> products = [];
+  List<String> filteredProducts = [];
 
   @override
   void initState() {
     super.initState();
-    filteredBooks = books; // Show all books initially
+    filteredProducts = products; // Show all products initially
   }
 
-  void _filterBooks(String query) {
+  void _filterProduct(String query) {
     setState(() {
-      filteredBooks = books
-          .where((book) => book.toLowerCase().contains(query.toLowerCase()))
+      filteredProducts = products
+          .where((product) => product.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -30,7 +32,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Search Books"),
+        title: Text(":חיפוש מוצר"),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
@@ -40,20 +42,20 @@ class _SearchScreenState extends State<SearchScreen> {
             TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: "Search for a book...",
+                hintText: "לחפש מוצר...",
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.search),
               ),
-              onChanged: _filterBooks,
+              onChanged: _filterProduct,
             ),
             SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: filteredBooks.length,
+                itemCount: filteredProducts.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(filteredBooks[index]),
-                    leading: Icon(Icons.book),
+                    title: Text(filteredProducts[index]),
+                    leading: Icon(Icons.shopping_cart),
                   );
                 },
               ),
@@ -62,5 +64,4 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
     );
-  }
-}
+  } }
