@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../Models/Order.dart';
+import 'EditProfileScreen.dart';
 import 'Orders.dart';
 import 'Search.dart';
 import 'ShoppingCart.dart';
+
 class Homepagescreen extends StatefulWidget {
   const Homepagescreen({super.key, required this.title});
 
@@ -42,44 +43,44 @@ class _Homepagescreen extends State<Homepagescreen> {
     setState(() {
       _selectedIndex = index;
 
-      if (index == 1) {
+      if(index == 1)
+      {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  ShoppingCart(
-                    title: "ShoppingCart",
-                  ),
+              builder: (context) => ShoppingCart(
+                title: "ShoppingCart",
+              ),
             )
         );
       }
-      else if (index == 2) {
+      else if(index == 2)
+      {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  Search(
-                    title: "Search",
-                  ),
+              builder: (context) => Searchs(
+                title: "Searchs",
+              ),
             )
         );
       }
-      else if (index == 3) {
+      else if(index == 3)
+      {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  Orders(
-                    title: "Orders",
-                  ),
+              builder: (context) => Orders(
+                title: "Orders",
+              ),
             )
         );
       }
     });
   }
-
   void _incrementCounter() {
     setState(() {
+
       _counter++;
     });
   }
@@ -88,10 +89,7 @@ class _Homepagescreen extends State<Homepagescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: GridView.count(
@@ -100,10 +98,7 @@ class _Homepagescreen extends State<Homepagescreen> {
           return Center(
             child: Text(
               'Item $index',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineSmall,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           );
         }),

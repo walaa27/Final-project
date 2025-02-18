@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../Models/User.dart';
+import '../Utils/ClientConfing.dart';
 import '../Utils/DB.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class Registerscreen extends StatefulWidget {
@@ -24,6 +27,16 @@ class RegisterscreenPageState extends State<Registerscreen> {
   final _txtPaswoord =TextEditingController();
 
 
+  Future insertUser(BuildContext context, User us) async {
+
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+    var url = "users/insertUser.php?firstName=" + us.FirstName + "&lastName=" + us.LastName;
+    final response = await http.get(Uri.parse(serverPath + url));
+    // print(serverPath + url);
+    setState(() { });
+    Navigator.pop(context);
+  }
 
 
   void insertUserFunc()
@@ -35,7 +48,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
         us.FirstName = _txtFirstName.text;
         us.LastName = _txtLastName.text;
         us.Password = _txtPaswoord.text;
-        var resp = insertUser(us);
+        var resp = insertUser(context,us);
 
         Future.delayed(
           Duration(seconds: 2),

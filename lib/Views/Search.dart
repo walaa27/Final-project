@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Search extends StatefulWidget {
-  const Search({super.key, required this.title});
+class Searchs extends StatefulWidget {
+  const Searchs({super.key, required this.title});
 
 
   final String title;
 
-  State<Search> createState() => _SearchScreenState();
+  State<Searchs> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<Search> {
+class _SearchScreenState extends State<Searchs> {
   TextEditingController _searchController = TextEditingController();
   List<String> products = [];
   List<String> filteredProducts = [];
@@ -64,4 +64,4 @@ class _SearchScreenState extends State<Search> {
         ),
       ),
     );
-  } }
+  }}

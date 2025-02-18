@@ -67,7 +67,7 @@ class OrdersPageState extends State<Orders> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.right,
                     ),
-                    SizedBox(height: 1),
+                    SizedBox(height: 3),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
