@@ -29,6 +29,13 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
   Future insertUser(BuildContext context, User us) async {
 
+
+
+
+
+
+
+
     //   SharedPreferences prefs = await SharedPreferences.getInstance();
     //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
     var url = "users/insertUser.php?firstName=" + us.FirstName + "&lastName=" + us.LastName;

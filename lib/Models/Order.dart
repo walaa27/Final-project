@@ -1,35 +1,34 @@
 class Order {
   Order({
-    this.Order_ID  = "",
-    this.TotalPrice = 0,
-    this.Adress = "",
-    this.OrderTime = "",
+    this.orderID  = 0,
+    this.totalPrice = 0,
+    this.address = "",
+    this.orderTime = "",
 
 
   });
 
-  String Order_ID ;
-  double TotalPrice;
-  String Adress;
-  String OrderTime;
+  int orderID ;
+  int totalPrice;
+  String address;
+  String orderTime;
 
 
   factory Order.fromJson(Map<String, dynamic> json)=>
       Order(
-        Order_ID : json ["Order_ID"],
-        TotalPrice: json["TotalPrice"],
-        Adress: json["Adress"],
-        OrderTime: json["OrderTime"],
-
+        orderID: json["orderID"],
+        totalPrice: json["totalPrice"],
+        address: json["address"],
+        orderTime: json["orderTime"],
 
       );
 
   Map<String, dynamic> toJson() =>
       {
-        "Order_ID":Order_ID  ,
-        "TotalPrice":TotalPrice ,
-        "Adress": Adress,
-        "OrderTime": OrderTime,
+        "orderID":orderID  ,
+        "totalPrice":totalPrice ,
+        "address": address,
+        "orderTime": orderTime,
 
 
       };

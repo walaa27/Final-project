@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'package:final_project/Models/Category.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import '../Models/Order.dart';
+import '../Utils/ClientConfing.dart';
 import 'EditProfileScreen.dart';
 import 'Orders.dart';
 import 'Search.dart';
-import 'ShoppingCart.dart';
+import 'Carts.dart';
+import 'package:http/http.dart' as http;
 
 class Homepagescreen extends StatefulWidget {
   const Homepagescreen({super.key, required this.title});
@@ -13,6 +18,7 @@ class Homepagescreen extends StatefulWidget {
 
   @override
   State<Homepagescreen> createState() => _Homepagescreen();
+
 }
 
 class _Homepagescreen extends State<Homepagescreen> {
@@ -48,8 +54,8 @@ class _Homepagescreen extends State<Homepagescreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ShoppingCart(
-                title: "ShoppingCart",
+              builder: (context) => Carts(
+                title: "Carts",
               ),
             )
         );
@@ -84,6 +90,21 @@ class _Homepagescreen extends State<Homepagescreen> {
       _counter++;
     });
   }
+  Future getMyCategories() async {
+
+    var url = "categories/getCategories.php";
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(serverPath + url);
+    List<category> arr = [];
+
+    for(Map<String, dynamic> i in json.decode(response.body)){
+      arr.add(category.fromJson(i));
+    }
+print("arr:" + arr.length.toString());
+    return arr;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,16 +113,67 @@ class _Homepagescreen extends State<Homepagescreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(100, (index) {
-          return Center(
-            child: Text(
-              'Item $index',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          );
-        }),
+      body: FutureBuilder(
+        future: getMyCategories(),
+        builder: (context, projectSnap) {
+          if (projectSnap.hasData) {
+            if (projectSnap.data.length == 0)
+            {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 2,
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text('אין תוצאות', style: TextStyle(fontSize: 23, color: Colors.black))
+                ),
+              );
+            }
+            else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+
+                  Expanded(
+                      child:ListView.builder(
+                        itemCount: projectSnap.data.length,
+                        itemBuilder: (context, index) {
+                          category project = projectSnap.data[index];
+
+                          return Card(
+                              child: ListTile(
+                                onTap: () {
+
+
+                                },
+                                title: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),), // Icon(Icons.timer),
+                                // subtitle: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+                                // trailing: Container(
+                                //   decoration: const BoxDecoration(
+                                //     color: Colors.blue,
+                                //     borderRadius: BorderRadius.all(Radius.circular(5)),
+                                //   ),
+                                //   padding: const EdgeInsets.symmetric(
+                                //     horizontal: 12,
+                                //     vertical: 4,
+                                //   ),
+                                //
+                                // ),
+
+                                isThreeLine: false,
+                              ));
+                        },
+                      )),
+                ],
+              );
+            }
+          }
+          else if (projectSnap.hasError)
+          {
+            print(projectSnap.error);
+            return  Center(child: Text('שגיאה, נסה שוב', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+          }
+          return Center(child: new CircularProgressIndicator(color: Colors.red,));
+        },
       ),
       drawer: Drawer(
         child: ListView(
