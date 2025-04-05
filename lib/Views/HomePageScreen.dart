@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:final_project/Models/Category.dart';
+import 'package:final_project/Views/ProductsListScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Order.dart';
 import '../Utils/ClientConfing.dart';
 import 'EditProfileScreen.dart';
@@ -141,7 +143,15 @@ print("arr:" + arr.length.toString());
 
                           return Card(
                               child: ListTile(
-                                onTap: () {
+                                onTap: () async {
+
+                                  final SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  await prefs.setInt('lastCatID', project.categoryID);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ProductsListScreen(title: project.categoryName,)),
+                                  );
+
 
 
                                 },

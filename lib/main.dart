@@ -14,10 +14,30 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
 
+    checkConction() async {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          // print('connected to internet');// print(result);// return 1;
+        }
+      } on SocketException catch (_) {
+        // print('not connected to internet');// print(result);
+        var uti = new Utils();
+        uti.showMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
+        return;
+      }
+    }
+
+
+    checkConction();
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -52,47 +72,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void insertUserFunc()
   {
-    if(_txtUserID.text == "" || _txtPhoneOrEmail.text == "")
+      if(_txtUserID.text == "" || _txtPhoneOrEmail.text == "")
+      {
+        var uti = new Utils();
+        uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
+    }
+    else
     {
-      var uti = new Utils();
-      uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
+      var us = new User();
+      us.UserID = _txtUserID.text;
+      us.PhoneOrEmail = _txtPhoneOrEmail.text;
+      // var resp = checkLogin(us);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
+      );
 
-
-  /*
-        print("resp: " + resp.toString());
-        if(resp == "1")
-          {
-            Navigator.push(
-               context,
-              MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-             );
-          }
-         */
-  // var uti = new Utils();
-  // uti.showMyDialog(context, "success", "you registed successfully");
-  // _txtPaswoord.text = "";
-  // _txtUserName.text = "";
-  // _txtLastName.text = "";
-  // Navigator.push(
-  //    context,
-  //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-  //  );
-
+    }
   }
-  else
-  {
-    var us = new User();
-    us.UserID = _txtUserID.text;
-    us.PhoneOrEmail = _txtPhoneOrEmail.text;
 
-    var resp = insertUser(us);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
-    );
 
-  }
-  }
+
   checkConction() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -110,14 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     checkConction();
 
 
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
         title: Text("סופר פארם"),
       ),
       body: Center(
@@ -156,9 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-
                 insertUserFunc();
-
 
               },
               child: Text('כניסה'),

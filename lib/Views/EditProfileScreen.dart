@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../Models/User.dart';
-import '../Utils/DB.dart';
+import '../Utils/ClientConfing.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
+import 'package:http/http.dart' as http;
 
 
 class EditProfileScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
         us.FirstName = _txtFirstName.text;
         us.LastName = _txtLastName.text;
         us.Password = _txtPaswoord.text;
-        var resp = insertUser(us);
+        var resp = updateUser(context, us);
 
         Future.delayed(
           Duration(seconds: 2),
@@ -77,6 +78,21 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
         uti.showMyDialog(context, "חובה", "בבקשה הזן את שם פרטי,שם משפחה והסיסמה");
       }
   }
+
+
+
+  Future updateUser(BuildContext context, User us) async {
+
+    //  SharedPreferences prefs = await SharedPreferences.getInstance();
+    //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+    var url = "users/updateUser.php?firstName=" + us.FirstName + "&lastName=" + us.LastName;
+    final response = await http.get(Uri.parse(serverPath + url));
+    // print(serverPath + url);
+    setState(() { });
+    Navigator.pop(context);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
