@@ -1,18 +1,46 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Models/User.dart';
+import 'Models/checkLoginModel.dart';
+import 'Utils/ClientConfing.dart';
 import 'Utils/DB.dart';
 import 'Utils/Utils.dart';
 import 'Views/RegisterScreen.dart';
+import 'package:http/http.dart' as http;
 void main() {
   runApp(const MyApp());
 }
+final _txtPhoneOrEmail =TextEditingController();
+final _txtPaswoord =TextEditingController();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future checkLogin(BuildContext context) async {
+
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+    var url = "login/checkLogin.php?PhoneOrEmail=" + _txtPhoneOrEmail.text+ "&password=" +  _txtPaswoord.text;
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(serverPath + url);
+    // setState(() { });
+    // Navigator.pop(context);
+    if(checkLoginModel.fromJson(jsonDecode(response.body)).result == "0")
+    {
+      return 'ת.ז ו/או הסיסמה שגויים';
+    }
+    else
+    {
+      // print("SharedPreferences 1");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', checkLoginModel.fromJson(jsonDecode(response.body)).result!);
+      // return null;
+    }
+  }
 
 
 
@@ -65,14 +93,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   // final _txtId =TextEditingController();
-  final _txtUserID=TextEditingController();
-  final _txtPhoneOrEmail =TextEditingController();
+
 
 
 
   void insertUserFunc()
   {
-      if(_txtUserID.text == "" || _txtPhoneOrEmail.text == "")
+      if(_txtPaswoord.text == "" || _txtPhoneOrEmail.text == "")
       {
         var uti = new Utils();
         uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
@@ -80,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     else
     {
       var us = new User();
-      us.UserID = _txtUserID.text;
+      us.Password = _txtPaswoord.text;
       us.PhoneOrEmail = _txtPhoneOrEmail.text;
       // var resp = checkLogin(us);
       Navigator.push(
@@ -125,19 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
-            Text("תעודת זהות* :" , style: TextStyle( fontSize: 20),),
-            Container(
-              width: 500,
-              child: TextField(
-                controller: _txtUserID,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'הזן את תעודת הזהות - חובה',
-                ),
-              ),
-            ),
-            Text(" מספר טלפון או אימיל" , style: TextStyle( fontSize: 20),),
+            Text(" :*מספר טלפון או אימיל" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
@@ -148,6 +163,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+
+            Text(":*סיסמה" , style: TextStyle( fontSize: 20),),
+            Container(
+              width: 500,
+              child: TextField(
+                controller: _txtPaswoord,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'הזן את הסיסמה - חובה',
+                ),
+              ),
+            ),
+
 
 
             TextButton(

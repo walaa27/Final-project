@@ -152,10 +152,10 @@ print("arr:" + arr.length.toString());
                                     MaterialPageRoute(builder: (context) => ProductsListScreen(title: project.categoryName,)),
                                   );
 
-
-
                                 },
                                 title: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),), // Icon(Icons.timer),
+                                trailing: Image.network(project.imageCat,
+                                ),
                                 // subtitle: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
                                 // trailing: Container(
                                 //   decoration: const BoxDecoration(

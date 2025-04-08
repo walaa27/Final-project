@@ -23,7 +23,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
   // final _txtId =TextEditingController();
   final _txtFirstName =TextEditingController();
   final _txtLastName =TextEditingController();
-  // final _txtEmail =TextEditingController();
+   final _txtPhoneOrEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
 
 
@@ -47,6 +47,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
         User us = new User();
         us.FirstName = _txtFirstName.text;
         us.LastName = _txtLastName.text;
+        us.PhoneOrEmail = _txtPhoneOrEmail.text;
         us.Password = _txtPaswoord.text;
         var resp = insertUser(context,us);
 
@@ -101,7 +102,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            Text("שם פרטי*:" , style: TextStyle( fontSize: 20),),
+            Text(":*שם פרטי" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
@@ -112,7 +113,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 ),
               ),
             ),
-            Text("שם משפחה*:" , style: TextStyle( fontSize: 20),),
+            Text(":*שם משפחה" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
@@ -124,9 +125,18 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 ),
               ),
 
-
-
-            Text("סיסמה*:" , style: TextStyle( fontSize: 20),),
+            Text(" :*מספר טלפון או אימיל" , style: TextStyle( fontSize: 20),),
+            Container(
+              width: 500,
+              child: TextField(
+                controller: _txtPhoneOrEmail,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'הזן את מספר טלפון אימיל - חובה',
+                ),
+              ),
+            ),
+            Text(":*סיסמה" , style: TextStyle( fontSize: 20),),
             Container(
               width: 500,
               child: TextField(
@@ -163,7 +173,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 /*
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
+                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'בית',)),
                 );
 */
                 // var uti = new Utils();
