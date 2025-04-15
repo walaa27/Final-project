@@ -6,6 +6,8 @@ import '../Utils/ClientConfing.dart';
 import 'Orders.dart';
 import 'package:http/http.dart' as http;
 
+import 'ProductDetailsScreen.dart';
+
 
 
 
@@ -91,9 +93,20 @@ class _ProductsListScreen extends State<ProductsListScreen> {
 
                           return Card(
                               child: ListTile(
-                                onTap: () {
 
+                                  onTap: () async {
+                                    final SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    await prefs.setInt(
+                                        'lastProductID', project.productID);
 
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductDetailsScreen(
+                                            title: project.productName,
+                                          )),
+                                    );
                                 },
                                 title: Text(project.productName!,
                                   style: TextStyle(fontSize: 16,

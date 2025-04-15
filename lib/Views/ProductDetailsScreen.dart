@@ -97,7 +97,7 @@ class ProductPageState extends State<ProductDetailsScreen> {
 
 
                 const SizedBox(height: 10),
-                const Text("price:",
+                const Text("price: ",
                   style: TextStyle(fontSize: 20, color: Colors.black54),
                 ),
 
@@ -120,6 +120,7 @@ class ProductPageState extends State<ProductDetailsScreen> {
                         const SnackBar(content: Text('Added to cart!')),
                       );
                     },
+
                     icon: const Icon(Icons.shopping_cart),
                     label: const Text('Add to Cart'),
                     style: ElevatedButton.styleFrom(

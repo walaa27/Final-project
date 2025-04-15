@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     // Navigator.pop(context);
     if(checkLoginModel.fromJson(jsonDecode(response.body)).result == "0")
     {
-      return 'ת.ז ו/או הסיסמה שגויים';
+      return 'מספר טלפון או אימיל ו/או הסיסמה שגויים';
     }
     else
     {
