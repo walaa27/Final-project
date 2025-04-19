@@ -20,52 +20,9 @@ final _txtPaswoord =TextEditingController();
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future checkLogin(BuildContext context) async {
-
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-    var url = "login/checkLogin.php?PhoneOrEmail=" + _txtPhoneOrEmail.text+ "&password=" +  _txtPaswoord.text;
-    final response = await http.get(Uri.parse(serverPath + url));
-    print(serverPath + url);
-    // setState(() { });
-    // Navigator.pop(context);
-    if(checkLoginModel.fromJson(jsonDecode(response.body)).result == "0")
-    {
-      return 'מספר טלפון או אימיל ו/או הסיסמה שגויים';
-    }
-    else
-    {
-      // print("SharedPreferences 1");
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', checkLoginModel.fromJson(jsonDecode(response.body)).result!);
-      // return null;
-    }
-  }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
-    checkConction() async {
-      try {
-        final result = await InternetAddress.lookup('google.com');
-        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          // print('connected to internet');// print(result);// return 1;
-        }
-      } on SocketException catch (_) {
-        // print('not connected to internet');// print(result);
-        var uti = new Utils();
-        uti.showMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
-        return;
-      }
-    }
-
-
-    checkConction();
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -91,31 +48,58 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  // final _txtId =TextEditingController();
+
+
+
+  fillSavedPars() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _txtPhoneOrEmail.text = prefs.get("email").toString();
+    _txtPaswoord.text = prefs.get("password").toString();
+    if(_txtPhoneOrEmail.text != "" && _txtPaswoord.text != "")
+    {
+      checkLogin(context);
+    }
+  }
 
 
 
 
-  void insertUserFunc()
-  {
-      if(_txtPaswoord.text == "" || _txtPhoneOrEmail.text == "")
-      {
-        var uti = new Utils();
-        uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
+  Future checkLogin(BuildContext context) async {
+
+    if(_txtPaswoord.text == "" || _txtPhoneOrEmail.text == "")
+    {
+      var uti = new Utils();
+      uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
     }
     else
-    {
-      var us = new User();
-      us.Password = _txtPaswoord.text;
-      us.PhoneOrEmail = _txtPhoneOrEmail.text;
-      // var resp = checkLogin(us);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
-      );
+      {
+        //   SharedPreferences prefs = await SharedPreferences.getInstance();
+        //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+        var url = "login/checkLogin.php?email=" + _txtPhoneOrEmail.text + "&password=" +  _txtPaswoord.text;
+        final response = await http.get(Uri.parse(serverPath + url));
+        print(serverPath + url);
+        // setState(() { });
+        // Navigator.pop(context);
+        if(checkLoginModel.fromJson(jsonDecode(response.body)).userID == 0)
+        {
+          // return ' אימיל ו/או הסיסמה שגויים';
+          var uti = new Utils();
+          uti.showMyDialog(context, "שגיאה", "אימיל ו/או הסיסמה שגויים");
+        }
+        else
+        {
+          // print("SharedPreferences 1");
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userID', checkLoginModel.fromJson(jsonDecode(response.body)).userID!.toString());
+          await prefs.setString('email', _txtPhoneOrEmail.text);
+          await prefs.setString('password', _txtPaswoord.text);
 
-    }
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
+          );
+        }
+      }
   }
 
 
@@ -140,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     checkConction();
 
+    fillSavedPars();
 
     return Scaffold(
       appBar: AppBar(
@@ -183,8 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                insertUserFunc();
-
+                // insertUserFunc();
+                checkLogin(context);
               },
               child: Text('כניסה'),
 
@@ -200,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(builder:(context) => const Registerscreen(title: "חשבון חדש")),
                 );
               },
-              child: Text('חשבון חדש'),
+              child: Text ('חשבון חדש'),
             ),
 
           ],

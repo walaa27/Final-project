@@ -9,7 +9,6 @@ import '../Utils/ClientConfing.dart';
 import 'EditProfileScreen.dart';
 import 'Orders.dart';
 import 'Search.dart';
-import 'Carts.dart';
 import 'package:http/http.dart' as http;
 
 class Homepagescreen extends StatefulWidget {
@@ -53,14 +52,7 @@ class _Homepagescreen extends State<Homepagescreen> {
 
       if(index == 1)
       {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Carts(
-                title: "Carts",
-              ),
-            )
-        );
+
       }
       else if(index == 2)
       {

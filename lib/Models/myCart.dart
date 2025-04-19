@@ -29,6 +29,7 @@ class Cart {
         "userID":userID  ,
         "productID":productID ,
         "quantity": quantity,
+        "productname": productname,
 
       };
 }

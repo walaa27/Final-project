@@ -104,12 +104,9 @@ class ProductPageState extends State<ProductDetailsScreen> {
 
                 Text(_currProduct.productPrice.toString()),
 
-
                 const SizedBox(height: 10),
                 Divider(thickness: 1, color: Colors.grey.shade400),
                 const SizedBox(height: 10),
-
-
 
                 // Add to Cart Button
                 Center(
