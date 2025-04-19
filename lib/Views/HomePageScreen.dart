@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Order.dart';
 import '../Utils/ClientConfing.dart';
 import 'EditProfileScreen.dart';
-import 'Orders.dart';
+import 'MyOrdersListScreen.dart';
 import 'Search.dart';
 import 'package:http/http.dart' as http;
 

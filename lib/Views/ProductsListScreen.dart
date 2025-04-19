@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Product.dart';
 import '../Utils/ClientConfing.dart';
-import 'Orders.dart';
+import 'MyOrdersListScreen.dart';
 import 'package:http/http.dart' as http;
 
 import 'ProductDetailsScreen.dart';
@@ -49,15 +49,10 @@ class _ProductsListScreen extends State<ProductsListScreen> {
 
 
 
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: FutureBuilder(
@@ -66,60 +61,71 @@ class _ProductsListScreen extends State<ProductsListScreen> {
           if (projectSnap.hasData) {
             if (projectSnap.data.length == 0) {
               return SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 2,
+                height: MediaQuery.of(context).size.height * 2,
                 child: Align(
                     alignment: Alignment.center,
                     child: Text('אין תוצאות',
-                        style: TextStyle(fontSize: 23, color: Colors.black))
-                ),
+                        style: TextStyle(fontSize: 23, color: Colors.black))),
               );
-            }
-            else {
+            } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
-
                   Expanded(
                       child: ListView.builder(
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, index) {
                           Product project = projectSnap.data[index];
 
-
                           return Card(
                               child: ListTile(
+                                onTap: () async {
+                                  final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                                  await prefs.setInt(
+                                      'lastProductID', project.productID);
 
-                                  onTap: () async {
-                                    final SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    await prefs.setInt(
-                                        'lastProductID', project.productID);
-
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetailsScreen(
-                                            title: project.productName,
-                                          )),
-                                    );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductDetailsScreen(
+                                          title: project.productName,
+                                        )),
+                                  );
                                 },
-                                title: Text(project.productName!,
-                                  style: TextStyle(fontSize: 16,
+                                title: Text(
+                                  project.productName!,
+                                  style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black),),
-                                // Icon(Icons.timer),
+                                      color: Colors.black),
+                                ), // Icon(Icons.timer),
                                 subtitle: Text(
-                                  project.productPrice!.toString() + "שח",
-                                  style: TextStyle(fontSize: 16,
+                                  project.productPrice!.toString() + "שח ",
+                                  style: TextStyle(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.black),),
-                                trailing: Image.network(project.imageURL,
+                                      color: Colors.black),
                                 ),
+                                trailing: Image.network(
+                                  project.imageURL,
+                                ),
+                                // trailing: Container(
+                                //   decoration: const BoxDecoration(
+                                //     color: Colors.blue,
+                                //     borderRadius: BorderRadius.all(Radius.circular(5)),
+                                //   ),
+                                //   padding: const EdgeInsets.symmetric(
+                                //     horizontal: 12,
+                                //     vertical: 4,
+                                //   ),
+                                //   child: Text(
+                                //     project.totalHours!,   // + "שעות "
+                                //     overflow: TextOverflow.ellipsis,
+                                //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                                //   ),
+                                // ),
 
                                 isThreeLine: false,
                               ));
@@ -128,18 +134,19 @@ class _ProductsListScreen extends State<ProductsListScreen> {
                 ],
               );
             }
-          }
-          else if (projectSnap.hasError) {
+          } else if (projectSnap.hasError) {
             print(projectSnap.error);
-            return Center(child: Text('שגיאה, נסה שוב',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+            return Center(
+                child: Text('שגיאה, נסה שוב',
+                    style:
+                    TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
           }
           return Center(
-              child: new CircularProgressIndicator(color: Colors.red,));
+              child: new CircularProgressIndicator(
+                color: Colors.red,
+              ));
         },
       ),
-
-
     );
   }
 }

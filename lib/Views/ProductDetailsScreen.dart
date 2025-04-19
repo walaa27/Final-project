@@ -43,6 +43,28 @@ class ProductPageState extends State<ProductDetailsScreen> {
     });
   }
 
+  Future insertProductToCart(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userID = prefs.getString("userID");
+    var url = "carts/insertProductToCart.php?userID=" +
+        userID! +
+        "&productID=" +
+        _currProduct.productID.toString();
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(serverPath + url);
+    setState(() {});
+    // Navigator.pop(context);
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //       builder: (context) => const Carts(title: "עגלה ")),
+    // );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Added to cart!')),
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +135,7 @@ class ProductPageState extends State<ProductDetailsScreen> {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       // Add to cart logic here
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Added to cart!')),
-                      );
+                      insertProductToCart(context);
                     },
 
                     icon: const Icon(Icons.shopping_cart),

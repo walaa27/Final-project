@@ -1,35 +1,35 @@
-class Cart {
-  Cart({
-    this.userID  = 0,
+class MyCart {
+  MyCart({
+    this.UserID  = 0,
     this.productID = 0,
     this.quantity = 0,
-    this.productname = "",
+    this.productName = "",
 
   });
 
-  int userID ;
+  int UserID ;
   int productID;
   int quantity;
-  String productname;
+  String productName;
 
 
 
-  factory Cart.fromJson(Map<String, dynamic> json)=>
-      Cart(
-        userID: json["userID"],
+  factory MyCart.fromJson(Map<String, dynamic> json)=>
+      MyCart(
+        UserID: json["UserID"],
         productID: json["productID"],
         quantity: json["quantity"],
-        productname: json["productname"],
+        productName: json["productName"],
 
 
       );
 
   Map<String, dynamic> toJson() =>
       {
-        "userID":userID  ,
+        "UserID":UserID  ,
         "productID":productID ,
         "quantity": quantity,
-        "productname": productname,
+        "productName": productName,
 
       };
 }
