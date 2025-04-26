@@ -20,8 +20,8 @@ class category {
 
   Map<String, dynamic> toJson() =>
       {
-        "categoryID ":categoryID    ,
-        "categoryName":categoryName ,
+        "categoryID ":categoryID ,
+        "categoryName":categoryName,
         "imageCat": imageCat,
 
       };

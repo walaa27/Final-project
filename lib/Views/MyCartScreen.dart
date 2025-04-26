@@ -3,24 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Product.dart';
 import '../Utils/ClientConfing.dart';
-import 'Homepagescreen.dart';
 import 'package:http/http.dart' as http;
 import 'ProductDetailsScreen.dart';
 
-class ShoppingCart extends StatefulWidget {
-  const ShoppingCart({super.key, required this.title});
+// class MyCartScreen extends StatefulWidget {
+//   const MyCartScreen({super.key, required this.title});
+//
+//   final String title;
+//   @override
+//   State<MyCartScreen> createState() => ShoppingCartPageState();
+// }
+
+class MyCartScreen extends StatefulWidget {
+  const MyCartScreen({super.key, required this.title});
 
   final String title;
-  @override
-  State<ShoppingCart> createState() => ShoppingCartPageState();
+
+  State<MyCartScreen> createState() => MyCartScreenState();
 }
 
-class ShoppingCartPageState extends State<ShoppingCart> {
+
+
+
+class MyCartScreenState extends State<MyCartScreen> {
   Future getMyCart() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userID = prefs.getString('userID');
 
-    var url = "carts/getMyCart.php?UserID=" + userID.toString();
+    var url = "carts/getMyCart.php?userID=" + userID.toString();
     final response = await http.get(Uri.parse(serverPath + url));
     print(serverPath + url);
     List<Product> arr = [];

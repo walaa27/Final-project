@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:final_project/Models/Category.dart';
+import 'package:final_project/Views/MyCartScreen.dart';
 import 'package:final_project/Views/ProductsListScreen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Models/Order.dart';
 import '../Utils/ClientConfing.dart';
-import 'EditProfileScreen.dart';
 import 'MyOrdersListScreen.dart';
 import 'Search.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +50,14 @@ class _Homepagescreen extends State<Homepagescreen> {
 
       if(index == 1)
       {
-
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyCartScreen(
+                title: "MyCartScreen",
+              ),
+            )
+        );
       }
       else if(index == 2)
       {
