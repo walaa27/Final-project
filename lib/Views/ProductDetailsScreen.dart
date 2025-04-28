@@ -39,9 +39,10 @@ class ProductPageState extends State<ProductDetailsScreen> {
     _currProduct = Product.fromJson(json.decode(response.body));
     setState(() {
 
-
     });
   }
+
+
 
   Future insertProductToCart(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,6 +66,7 @@ class ProductPageState extends State<ProductDetailsScreen> {
     );
 
   }
+
 
   @override
   Widget build(BuildContext context) {

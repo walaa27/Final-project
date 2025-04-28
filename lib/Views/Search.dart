@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class Searchs extends StatefulWidget {
   const Searchs({super.key, required this.title});
 
-
   final String title;
 
   State<Searchs> createState() => _SearchScreenState();
@@ -27,6 +26,7 @@ class _SearchScreenState extends State<Searchs> {
           .toList();
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
