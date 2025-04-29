@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Models/User.dart';
 import 'Models/checkLoginModel.dart';
 import 'Utils/ClientConfing.dart';
-import 'Utils/DB.dart';
+
 import 'Utils/Utils.dart';
 import 'Views/RegisterScreen.dart';
 import 'package:http/http.dart' as http;

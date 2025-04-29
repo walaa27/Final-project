@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Models/User.dart';
 import '../Utils/ClientConfing.dart';
-import '../Utils/DB.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 import 'package:http/http.dart' as http;
