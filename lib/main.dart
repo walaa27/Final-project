@@ -93,8 +93,12 @@ class _MyHomePageState extends State<MyHomePage> {
           await prefs.setString('userID', checkLoginModel.fromJson(jsonDecode(response.body)).userID!.toString());
           await prefs.setString('email', _txtPhoneOrEmail.text);
           await prefs.setString('password', _txtPaswoord.text);
+          await prefs.setString('FirstName', checkLoginModel.fromJson(jsonDecode(response.body)).FirstName!.toString());
+          await prefs.setString('LastName', checkLoginModel.fromJson(jsonDecode(response.body)).LastName!.toString());
 
-          Navigator.push(
+
+
+    Navigator.push(
             context,
             MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
           );

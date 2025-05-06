@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Order.dart';
 import '../Utils/ClientConfing.dart';
 import 'OrderDetailsScreen.dart';
@@ -18,7 +19,10 @@ class Orders extends StatefulWidget {
 class OrdersPageState extends State<Orders> {
 
   Future getMyOrders() async {
-    var url = "orders/getMyOrders.php";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userID = prefs.getString('userID');
+
+    var url = "orders/getMyOrders.php?userID=" + userID!;
     final response = await http.get(Uri.parse(serverPath + url));
     print(serverPath + url);
     List<Order> arr = [];

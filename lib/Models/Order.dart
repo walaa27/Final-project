@@ -11,12 +11,17 @@ class Order{
   String orderTime;
   String address;
 
-  // [{"orderID":"1","total":"2000","address":"zeemer","orderTime":"2024-11-30","fullNameOrder":""}]
+  // $arr = array( 'orderID' => "$orderID",
+  // 'total' => "$total",
+  // 'notes' => $notes,
+  // 'orderTime' => $orderTime
+
+
 
   factory Order.fromJson(Map<String,dynamic> json)=>Order(
-    totalPrice: json ["totalPrice"],
+    totalPrice: json ["total"],
     orderTime: json["orderTime"],
-    address: json["address"],
+    address: json["notes"],
     orderID: json["orderID"],
   );
   Map<String,dynamic> toJson() => {

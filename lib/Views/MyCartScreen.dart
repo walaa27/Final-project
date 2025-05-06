@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:final_project/Views/EndOrder.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/Product.dart';
@@ -132,17 +133,34 @@ class MyCartScreenState extends State<MyCartScreen> {
               ));
         },
       ),
-      bottomNavigationBar:
-      TextButton(
+      bottomNavigationBar: TextButton(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
         ),
-        onPressed: () {
-          // checkLogin(context);
+        onPressed: () async {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          final String? userName = prefs.getString('userName'); // تأكد أنه محفوظ من قبل
 
+          List<Product> cartItems = await getMyCart();
+          double totalPrice = 0;
+          for (var item in cartItems) {
+            totalPrice += item.productPrice ?? 0;
+          }
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Endorder(
+                userName: userName ?? 'אורח',
+                cartItems: cartItems,
+                totalPrice: totalPrice,
+              ),
+            ),
+          );
         },
         child: Text('סיום הזמנה'),
       ),
+
     );
   }
 }
