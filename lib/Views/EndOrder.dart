@@ -4,13 +4,10 @@ import '../Models/Product.dart';
 import '../Utils/ClientConfing.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class Endorder extends StatefulWidget {
   final String userName;
   final List<Product> cartItems;
   final double totalPrice;
-
   const Endorder({
     Key? key,
     required this.userName,
@@ -24,12 +21,8 @@ class Endorder extends StatefulWidget {
 
 class _EndorderState extends State<Endorder> {
   final TextEditingController notesController = TextEditingController();
-
   late String? _FirstName = "";
   late String? _LastName = "";
-
-
-
 
   Future insertOrder(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,36 +32,23 @@ class _EndorderState extends State<Endorder> {
     final response = await http.get(Uri.parse(serverPath + url));
     print(serverPath + url);
     setState(() {});
-
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('הזמנה בוצעה בהצלחה!')),
     );
-
     Navigator.pop(context);
     Navigator.pop(context);
 
   }
-
-
-
   getMyDetails() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _FirstName = prefs.getString("FirstName");
     _LastName = prefs.getString("LastName");
     setState(() {});
 
   }
-
-
-
     @override
   Widget build(BuildContext context) {
-
-
     getMyDetails();
-
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(

@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Models/User.dart';
 import 'Models/checkLoginModel.dart';
 import 'Utils/ClientConfing.dart';
-
 import 'Utils/Utils.dart';
 import 'Views/RegisterScreen.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +17,6 @@ final _txtPaswoord =TextEditingController();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +36,12 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-
   final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
-
-
-
   fillSavedPars() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _txtPhoneOrEmail.text = prefs.get("email").toString();
@@ -60,8 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
       checkLogin(context);
     }
   }
-
-
 
 
   Future checkLogin(BuildContext context) async {
@@ -96,8 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
           await prefs.setString('FirstName', checkLoginModel.fromJson(jsonDecode(response.body)).FirstName!.toString());
           await prefs.setString('LastName', checkLoginModel.fromJson(jsonDecode(response.body)).LastName!.toString());
 
-
-
     Navigator.push(
             context,
             MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
@@ -105,8 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }
   }
-
-
 
   checkConction() async {
     try {
@@ -122,14 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     checkConction();
-
     fillSavedPars();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -164,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
 
 
             TextButton(

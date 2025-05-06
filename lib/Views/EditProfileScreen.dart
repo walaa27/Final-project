@@ -5,7 +5,6 @@ import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 import 'package:http/http.dart' as http;
 
-
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.title});
 
@@ -24,13 +23,11 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
   // final _txtEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
 
-
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
   }
-
 
   void insertUserFunc()
   {
@@ -50,26 +47,6 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
                 MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
               ),
         );
-
-        /*
-        print("resp: " + resp.toString());
-        if(resp == "1")
-          {
-            Navigator.push(
-               context,
-              MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-             );
-          }
-         */
-        // var uti = new Utils();
-        // uti.showMyDialog(context, "success", "you registed successfully");
-         // _txtPaswoord.text = "";
-         // _txtUserName.text = "";
-         // _txtLastName.text = "";
-        // Navigator.push(
-        //    context,
-        //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-        //  );
 
       }
     else
@@ -146,42 +123,15 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
               ),
             ),
 
-/*
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-                );
-              },
-              child: Text('Register'),
-            ),
-            */
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-
                 insertUserFunc();
-
-                /*
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-                );
-*/
-                // var uti = new Utils();
-                // uti.showMyDialog(context, _txtEmail.text,_txtId.text );
               },
               child: Text('הרשמה'),
             ),
-
-//
-
           ],
         ),
       ),

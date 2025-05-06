@@ -5,36 +5,22 @@ import '../Models/Product.dart';
 import '../Utils/ClientConfing.dart';
 import 'MyOrdersListScreen.dart';
 import 'package:http/http.dart' as http;
-
 import 'ProductDetailsScreen.dart';
-
-
-
-
-
 class ProductsListScreen extends StatefulWidget {
   const ProductsListScreen({super.key, required this.title});
-
-
   final String title;
 
   @override
   State<ProductsListScreen> createState() => _ProductsListScreen();
 }
-
 class _ProductsListScreen extends State<ProductsListScreen> {
 
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-
-
   Future getProducts() async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int? lastCategoryID = prefs.getInt('lastCatID');
-
-
     var url = "products/getProducts.php?categoryID=" + lastCategoryID.toString();
     final response = await http.get(Uri.parse(serverPath + url));
     print(serverPath + url);
@@ -43,11 +29,8 @@ class _ProductsListScreen extends State<ProductsListScreen> {
     for(Map<String, dynamic> i in json.decode(response.body)){
       arr.add(Product.fromJson(i));
     }
-
     return arr;
   }
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,22 +94,6 @@ class _ProductsListScreen extends State<ProductsListScreen> {
                                 trailing: Image.network(
                                   project.imageURL,
                                 ),
-                                // trailing: Container(
-                                //   decoration: const BoxDecoration(
-                                //     color: Colors.blue,
-                                //     borderRadius: BorderRadius.all(Radius.circular(5)),
-                                //   ),
-                                //   padding: const EdgeInsets.symmetric(
-                                //     horizontal: 12,
-                                //     vertical: 4,
-                                //   ),
-                                //   child: Text(
-                                //     project.totalHours!,   // + "שעות "
-                                //     overflow: TextOverflow.ellipsis,
-                                //     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
-                                //   ),
-                                // ),
-
                                 isThreeLine: false,
                               ));
                         },

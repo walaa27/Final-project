@@ -11,15 +11,11 @@ import 'package:http/http.dart' as http;
 
 class Homepagescreen extends StatefulWidget {
   const Homepagescreen({super.key, required this.title});
-
-
   final String title;
 
   @override
   State<Homepagescreen> createState() => _Homepagescreen();
-
 }
-
 class _Homepagescreen extends State<Homepagescreen> {
   int _counter = 0;
   int _selectedIndex = 0;
@@ -47,7 +43,6 @@ class _Homepagescreen extends State<Homepagescreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-
       if(index == 1)
       {
         Navigator.push(
@@ -103,8 +98,6 @@ print("arr:" + arr.length.toString());
     return arr;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,19 +146,6 @@ print("arr:" + arr.length.toString());
                                 title: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),), // Icon(Icons.timer),
                                 trailing: Image.network(project.imageCat,
                                 ),
-                                // subtitle: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                                // trailing: Container(
-                                //   decoration: const BoxDecoration(
-                                //     color: Colors.blue,
-                                //     borderRadius: BorderRadius.all(Radius.circular(5)),
-                                //   ),
-                                //   padding: const EdgeInsets.symmetric(
-                                //     horizontal: 12,
-                                //     vertical: 4,
-                                //   ),
-                                //
-                                // ),
-
                                 isThreeLine: false,
                               ));
                         },

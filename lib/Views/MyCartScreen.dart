@@ -7,24 +7,12 @@ import '../Utils/ClientConfing.dart';
 import 'package:http/http.dart' as http;
 import 'ProductDetailsScreen.dart';
 
-// class MyCartScreen extends StatefulWidget {
-//   const MyCartScreen({super.key, required this.title});
-//
-//   final String title;
-//   @override
-//   State<MyCartScreen> createState() => ShoppingCartPageState();
-// }
-
 class MyCartScreen extends StatefulWidget {
   const MyCartScreen({super.key, required this.title});
-
   final String title;
 
   State<MyCartScreen> createState() => MyCartScreenState();
 }
-
-
-
 
 class MyCartScreenState extends State<MyCartScreen> {
   Future getMyCart() async {
@@ -39,14 +27,8 @@ class MyCartScreenState extends State<MyCartScreen> {
     for (Map<String, dynamic> i in json.decode(response.body)) {
       arr.add(Product.fromJson(i));
     }
-
     return arr;
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +60,6 @@ class MyCartScreenState extends State<MyCartScreen> {
                         itemCount: projectSnap.data.length,
                         itemBuilder: (context, index) {
                           Product project = projectSnap.data[index];
-
                           return Card(
                               child: ListTile(
                                 onTap: () async {
@@ -112,7 +93,6 @@ class MyCartScreenState extends State<MyCartScreen> {
                                 trailing: Image.network(
                                   project.imageURL,
                                 ),
-
                                 isThreeLine: false,
                               ));
                         },
@@ -146,7 +126,6 @@ class MyCartScreenState extends State<MyCartScreen> {
           for (var item in cartItems) {
             totalPrice += item.productPrice ?? 0;
           }
-
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -160,7 +139,6 @@ class MyCartScreenState extends State<MyCartScreen> {
         },
         child: Text('סיום הזמנה'),
       ),
-
     );
   }
 }

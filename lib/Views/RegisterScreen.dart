@@ -4,19 +4,13 @@ import '../Utils/ClientConfing.dart';
 import '../Utils/Utils.dart';
 import 'HomePageScreen.dart';
 import 'package:http/http.dart' as http;
-
-
-
 class Registerscreen extends StatefulWidget {
   const Registerscreen({super.key, required this.title});
-
-
   final String title;
 
   @override
   State<Registerscreen> createState() => RegisterscreenPageState();
 }
-
 class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
   // final _txtId =TextEditingController();
@@ -24,7 +18,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
   final _txtLastName =TextEditingController();
    final _txtPhoneOrEmail =TextEditingController();
   final _txtPaswoord =TextEditingController();
-
 
   Future insertUser(BuildContext context, User us) async {
 
@@ -36,7 +29,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
     setState(() { });
     Navigator.pop(context);
   }
-
 
   void insertUserFunc()
   {
@@ -57,27 +49,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
               ),
         );
-
-        /*
-        print("resp: " + resp.toString());
-        if(resp == "1")
-          {
-            Navigator.push(
-               context,
-              MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-             );
-          }
-         */
-        // var uti = new Utils();
-        // uti.showMyDialog(context, "success", "you registed successfully");
-         // _txtPaswoord.text = "";
-         // _txtUserName.text = "";
-         // _txtLastName.text = "";
-        // Navigator.push(
-        //    context,
-        //   MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-        //  );
-
       }
     else
       {
@@ -146,21 +117,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 ),
               ),
             ),
-
-/*
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePageScreen',)),
-                );
-              },
-              child: Text('Register'),
-            ),
-            */
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -168,13 +124,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
               onPressed: () {
 
                 insertUserFunc();
-
-                /*
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Homepagescreen(title: 'בית',)),
-                );
-*/
                 // var uti = new Utils();
                 // uti.showMyDialog(context, _txtEmail.text,_txtId.text );
               },
@@ -182,7 +131,6 @@ class RegisterscreenPageState extends State<Registerscreen> {
             ),
 
 //
-
           ],
         ),
       ),

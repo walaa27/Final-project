@@ -9,7 +9,6 @@ import 'OrderDetailsScreen.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key, required this.title});
-
   final String title;
 
   @override
@@ -30,11 +29,8 @@ class OrdersPageState extends State<Orders> {
     for (Map<String, dynamic> i in json.decode(response.body)) {
       arr.add(Order.fromJson(i));
     }
-
     return arr;
   }
-
-  // int? selectedOrderId;
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +38,6 @@ class OrdersPageState extends State<Orders> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
           appBar: AppBar(title: Text("הזמנות")
-            /*
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: Text(selectedOrderId == null
-                ? widget.title
-                : "תאריך ההזמנה: $selectedOrderId"),
-            leading: selectedOrderId != null
-                ? IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      setState(() {
-                        selectedOrderId = null;
-                      });
-                    },
-                  )
-                : null,
-             */
           ),
           body: FutureBuilder(
             future: getMyOrders(),
@@ -86,8 +66,6 @@ class OrdersPageState extends State<Orders> {
                               return Card(
                                   child: ListTile(
                                     onTap: () {
-
-
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder:(context) => const OrderDetails(orderId: 12, items: [],)),
@@ -129,25 +107,3 @@ class OrdersPageState extends State<Orders> {
     );
   }
 }
-/*
-class OrderDetails extends StatelessWidget {
-  final int orderId;
-
-  const OrderDetails({super.key, required this.orderId});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("تفاصيل الطلبية رقم $orderId"),
-      ),
-      body: Center(
-        child: Text(
-          "هنا تفاصيل الطلبية رقم $orderId",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
-*/
