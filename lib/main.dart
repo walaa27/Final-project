@@ -1,30 +1,31 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Models/User.dart';
+import 'package:http/http.dart' as http;
+
 import 'Models/checkLoginModel.dart';
 import 'Utils/ClientConfing.dart';
 import 'Utils/Utils.dart';
+import 'Views/HomePageScreen.dart';
 import 'Views/RegisterScreen.dart';
-import 'package:http/http.dart' as http;
+
 void main() {
   runApp(const MyApp());
 }
-final _txtPhoneOrEmail =TextEditingController();
-final _txtPaswoord =TextEditingController();
+
+final _txtPhoneOrEmail = TextEditingController();
+final _txtPaswoord = TextEditingController();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Login App',
       theme: ThemeData(
-
+        primaryColor: Colors.blue.shade700,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
@@ -41,141 +42,155 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
-  fillSavedPars() async {
+  @override
+  void initState() {
+    super.initState();
+    checkConction();
+    fillSavedPars();
+  }
+
+  void fillSavedPars() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _txtPhoneOrEmail.text = prefs.get("email").toString();
-    _txtPaswoord.text = prefs.get("password").toString();
-    if(_txtPhoneOrEmail.text != "" && _txtPaswoord.text != "")
-    {
+    _txtPhoneOrEmail.text = prefs.getString("email") ?? "";
+    _txtPaswoord.text = prefs.getString("password") ?? "";
+    if (_txtPhoneOrEmail.text.isNotEmpty && _txtPaswoord.text.isNotEmpty) {
       checkLogin(context);
     }
   }
 
-
   Future checkLogin(BuildContext context) async {
+    if (_txtPaswoord.text.isEmpty || _txtPhoneOrEmail.text.isEmpty) {
+      Utils().showMyDialog(context, "חובה", "בבקשה הזן את מספר הטלפון או האיימיל והסיסמה");
+    } else {
+      final url =
+          "login/checkLogin.php?email=${_txtPhoneOrEmail.text}&password=${_txtPaswoord.text}";
+      final response = await http.get(Uri.parse(serverPath + url));
 
-    if(_txtPaswoord.text == "" || _txtPhoneOrEmail.text == "")
-    {
-      var uti = new Utils();
-      uti.showMyDialog(context, "חובה", "בבקשה הזן את שם התעודת זהות ןמספר הטלפון או האיימל שלך");
-    }
-    else
-      {
-        //   SharedPreferences prefs = await SharedPreferences.getInstance();
-        //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-        var url = "login/checkLogin.php?email=" + _txtPhoneOrEmail.text + "&password=" +  _txtPaswoord.text;
-        final response = await http.get(Uri.parse(serverPath + url));
-        print(serverPath + url);
-        // setState(() { });
-        // Navigator.pop(context);
-        if(checkLoginModel.fromJson(jsonDecode(response.body)).userID == 0)
-        {
-          // return ' אימיל ו/או הסיסמה שגויים';
-          var uti = new Utils();
-          uti.showMyDialog(context, "שגיאה", "אימיל ו/או הסיסמה שגויים");
-        }
-        else
-        {
-          // print("SharedPreferences 1");
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('userID', checkLoginModel.fromJson(jsonDecode(response.body)).userID!.toString());
-          await prefs.setString('email', _txtPhoneOrEmail.text);
-          await prefs.setString('password', _txtPaswoord.text);
-          await prefs.setString('FirstName', checkLoginModel.fromJson(jsonDecode(response.body)).FirstName!.toString());
-          await prefs.setString('LastName', checkLoginModel.fromJson(jsonDecode(response.body)).LastName!.toString());
+      final data = checkLoginModel.fromJson(jsonDecode(response.body));
+      if (data.userID == 0) {
+        Utils().showMyDialog(context, "שגיאה", "אימיל ו/או הסיסמה שגויים");
+      } else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userID', data.userID.toString());
+        await prefs.setString('email', _txtPhoneOrEmail.text);
+        await prefs.setString('password', _txtPaswoord.text);
+        await prefs.setString('FirstName', data.FirstName ?? "");
+        await prefs.setString('LastName', data.LastName ?? "");
 
-    Navigator.push(
-            context,
-            MaterialPageRoute(builder:(context) => const Homepagescreen(title: "בית")),
-          );
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Homepagescreen(title: "בית")),
+        );
       }
+    }
   }
 
-  checkConction() async {
+  void checkConction() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        // print('connected to internet');// print(result);// return 1;
+        // Connected
       }
     } on SocketException catch (_) {
-      // print('not connected to internet');// print(result);
-      var uti = new Utils();
-      uti.showMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
-      return;
+      Utils().showMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    checkConction();
-    fillSavedPars();
     return Scaffold(
+      backgroundColor: Colors.blue.shade50, // خلفية أزرق فاتح
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("סופר פארם"),
+        backgroundColor: Colors.blue.shade700,
+        title: const Text(
+          "סופר-פארם",
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
       ),
       body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(" :*מספר טלפון או אימיל" , style: TextStyle( fontSize: 20),),
-            Container(
-              width: 500,
-              child: TextField(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          width: 400,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10,
+              )
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Text(
+                "* מספר טלפון / אימייל",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+              const SizedBox(height: 8),
+              TextField(
                 controller: _txtPhoneOrEmail,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'הזן את מספר טלפון אימיל - חובה',
+                  hintText: 'הזן טלפון או אימייל',
+                  prefixIcon: const Icon(Icons.email),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
-            ),
-
-            Text(":*סיסמה" , style: TextStyle( fontSize: 20),),
-            Container(
-              width: 500,
-              child: TextField(
+              const SizedBox(height: 20),
+              const Text(
+                "* סיסמה",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.right,
+              ),
+              const SizedBox(height: 8),
+              TextField(
                 controller: _txtPaswoord,
+                obscureText: true,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'הזן את הסיסמה - חובה',
+                  hintText: 'הזן סיסמה',
+                  prefixIcon: const Icon(Icons.lock),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
-            ),
-
-
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade200,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () => checkLogin(context),
+                  child: const Text("כניסה", style: TextStyle(fontSize: 18)),
+                ),
               ),
-              onPressed: () {
-                // insertUserFunc();
-                checkLogin(context);
-              },
-              child: Text('כניסה'),
-
-            ),
-
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.push(
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder:(context) => const Registerscreen(title: "חשבון חדש")),
-                );
-              },
-              child: Text ('חשבון חדש'),
-            ),
-
-          ],
+                    MaterialPageRoute(
+                        builder: (context) => const Registerscreen(title: "חשבון חדש")),
+                  );
+                },
+                child: const Text(
+                  "חשבון חדש",
+                  style: TextStyle(color: Colors.blueAccent, fontSize: 16),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-
     );
   }
 }
