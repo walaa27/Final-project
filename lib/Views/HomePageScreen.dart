@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Utils/ClientConfing.dart';
 import 'MyOrdersListScreen.dart';
-import 'Search.dart';
 import 'package:http/http.dart' as http;
 
 class Homepagescreen extends StatefulWidget {
@@ -16,213 +15,143 @@ class Homepagescreen extends StatefulWidget {
   @override
   State<Homepagescreen> createState() => _Homepagescreen();
 }
+
 class _Homepagescreen extends State<Homepagescreen> {
-  int _counter = 0;
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: ראשי',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: הסל שלי',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: חיפוש',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: הזמנות',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if(index == 1)
-      {
+      if (index == 1) {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyCartScreen(
-                title: "MyCartScreen",
-              ),
-            )
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyCartScreen(title: "הסל שלי"),
+          ),
         );
-      }
-      else if(index == 2)
-      {
+      }  else if (index == 2) {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Searchs(
-                title: "Searchs",
-              ),
-            )
-        );
-      }
-      else if(index == 3)
-      {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Orders(
-                title: "Orders",
-              ),
-            )
+          context,
+          MaterialPageRoute(
+            builder: (context) => Orders(title: "ההזמנות שלי"),
+          ),
         );
       }
     });
   }
-  void _incrementCounter() {
-    setState(() {
 
-      _counter++;
-    });
-  }
-  Future getMyCategories() async {
-
+  Future<List<category>> getMyCategories() async {
     var url = "categories/getCategories.php";
     final response = await http.get(Uri.parse(serverPath + url));
-    print(serverPath + url);
     List<category> arr = [];
 
-    for(Map<String, dynamic> i in json.decode(response.body)){
+    for (Map<String, dynamic> i in json.decode(response.body)) {
       arr.add(category.fromJson(i));
     }
-print("arr:" + arr.length.toString());
+
     return arr;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100], // سكّني فاتح خلفية الصفحة
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.blue[100], // أزرق فاتح
+        title: Text(
+          widget.title,
+          style: TextStyle(color: Colors.blue[900], fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0,
       ),
       body: FutureBuilder(
         future: getMyCategories(),
-        builder: (context, projectSnap) {
-          if (projectSnap.hasData) {
-            if (projectSnap.data.length == 0)
-            {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 2,
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text('אין תוצאות', style: TextStyle(fontSize: 23, color: Colors.black))
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  'אין תוצאות',
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    category cat = snapshot.data![index];
+                    return Card(
+                      elevation: 3,
+                      margin: EdgeInsets.symmetric(vertical: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: Colors.white,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(12),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            cat.imageCat,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(
+                          cat.categoryName ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.blueGrey[900],
+                          ),
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios, color: Colors.red[200]),
+                        onTap: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setInt('lastCatID', cat.categoryID);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductsListScreen(title: cat.categoryName ?? ''),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
               );
             }
-            else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-
-                  Expanded(
-                      child:ListView.builder(
-                        itemCount: projectSnap.data.length,
-                        itemBuilder: (context, index) {
-                          category project = projectSnap.data[index];
-
-                          return Card(
-                              child: ListTile(
-                                onTap: () async {
-
-                                  final SharedPreferences prefs = await SharedPreferences.getInstance();
-                                  await prefs.setInt('lastCatID', project.categoryID);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ProductsListScreen(title: project.categoryName,)),
-                                  );
-
-                                },
-                                title: Text(project.categoryName!.toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),), // Icon(Icons.timer),
-                                trailing: Image.network(project.imageCat,
-                                ),
-                                isThreeLine: false,
-                              ));
-                        },
-                      )),
-                ],
-              );
-            }
-          }
-          else if (projectSnap.hasError)
-          {
-            print(projectSnap.error);
-            return  Center(child: Text('שגיאה, נסה שוב', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
-          }
-          return Center(child: new CircularProgressIndicator(color: Colors.red,));
-        },
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'שגיאה, נסה שוב',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Add Content'),
-              selected: _selectedIndex == 0,
-              onTap: () {
-                _onItemTapped(0);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Edit Profile'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                _onItemTapped(1);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Log Out'),
-              selected: _selectedIndex == 2,
-              onTap: () {
-                _onItemTapped(2);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(color: Colors.red[200]),
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'ראשי',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-
-            label: 'הסל שלי',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'חיפוש',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sticky_note_2_outlined),
-            label: 'הזמנות',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ראשי'),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_basket), label: 'הסל שלי'),
+          BottomNavigationBarItem(icon: Icon(Icons.sticky_note_2_outlined), label: 'הזמנות'),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.red[400], // أحمر خفيف
+        unselectedItemColor: Colors.grey[600],
+        backgroundColor: Colors.white,
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }

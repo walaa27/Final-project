@@ -12,7 +12,7 @@ class OrderDetails extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("تفاصيل الطلبية رقم $orderId"),
+          title: Text("פרטי הזמנה "),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
